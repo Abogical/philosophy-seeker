@@ -33,13 +33,14 @@ if __name__ == '__main__':
 		# Determining if it's a "normal" link
 		for link in fromstring(urlopen(f'https://{wiki_lang}.wikipedia.org/wiki/{name}').read()).xpath('//*[@role="main"]//p/a[starts-with(@href, "/wiki/")]'):
 			parens = 0
-			for sibling in chain([link], link.itersiblings()):
-				if b'(' in tostring(sibling):
+			# Check if it is inside a paranthesis
+			for token in reversed(link.xpath('./preceding-sibling::text()')):
+				if ')' in token:
 					parens += 1
-				if b')' in tostring(sibling):
+				if '(' in token:
 					parens -= 1
 				if parens < 0:
-					continue
+					break
 			if parens < 0:
 				continue
 			next_name = name_re.match(link.attrib['href']).group(1)

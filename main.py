@@ -46,7 +46,7 @@ if __name__ == '__main__':
 			exit(0)
 
 
-	for _ in range(1, URL_LIMIT):
+	while True:
 		next_name = None
 		response = urlopen(f'https://{wiki_lang}.wikipedia.org/wiki/{name}')
 		# Redirect may change the name of the loop
@@ -69,6 +69,9 @@ if __name__ == '__main__':
 				continue
 			next_name = name_re.match(link.attrib['href']).group(1)
 			break
+		if next_name == None:
+			print('No further links found')
+			exit(0)
 		detect_philosophy(next_name)
 		detect_loop(next_name)
 		name = next_name

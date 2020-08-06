@@ -12,6 +12,14 @@ The law is true for most articles, but the script may hit a link loop. The scrip
 -   Dead link
 -   Citation
 
+## Dependencies
+
+The script uses [lxml](https://lxml.de). Install first via:
+
+```
+pip install lxml
+```
+
 ## Usage
 
 ```
